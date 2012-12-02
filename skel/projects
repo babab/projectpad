@@ -1,0 +1,8 @@
+# vim: set ft=sh:
+
+PROJECTS="  ${HOME}/git/dispass             DisPass
+            ${HOME}/git/springwhiz          springwhiz
+            ${HOME}                         dotfiles
+            ${HOME}/git/bababchat           bababchat
+            ${HOME}/git/bstats              bstats
+            ${HOME}/git/clientrawparser     clientrawparser"
