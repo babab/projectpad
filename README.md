@@ -9,6 +9,8 @@ Projectpad is a simple shell script for managing paths to (software) projects.
 
 ## Downloading
 
+More info soon...
+
 ## Installing
 
 Make sure projectpad has execution rights.

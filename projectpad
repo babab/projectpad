@@ -30,14 +30,14 @@ if [ $? -gt 0 ]; then
 fi
 
 if [ -f "${FILEROOT}/projects" ]; then
-    . "${FILEROOT}/projects"
-
-    if [ -z "${PROJECTS}" ]; then
-        echo "Error: could not find \$PROJECTS"
-        exit 2
-    fi
+    PROJECTS="$(cat ${FILEROOT}/projects)"
 else
-    echo "Error: could not find file: ${FILEROOT}/projects"
+    echo "Error: could not find file '${FILEROOT}/projects'"
+    exit 2
+fi
+
+if [ -z "${PROJECTS}" ]; then
+    echo "Error: '${FILEROOT}/projects' is empty"
     exit 2
 fi
 
