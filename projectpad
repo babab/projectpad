@@ -85,7 +85,13 @@ case "$1" in
         ;;
     "-g" | "--get")
         if [ -f "${FILEROOT}/current" ]; then
-            cat "${FILEROOT}/current"
+            PROJECT=$(cat "${FILEROOT}/current")
+        else
+            echo "${HOME}"
+            exit 2
+        fi
+        if [ -d "${PROJECT}" ]; then
+            echo "${PROJECT}"
         else
             echo "${HOME}"
             exit 2
