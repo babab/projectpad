@@ -29,6 +29,13 @@ if [ $? -gt 0 ]; then
     exit 1
 fi
 
+if [ ! -d "${FILEROOT}" ]; then
+    mkdir -p "${FILEROOT}"
+fi
+if [ ! -f "${FILEROOT}/projects" ]; then
+    touch "${FILEROOT}/projects"
+fi
+
 if [ -f "${FILEROOT}/projects" ]; then
     PROJECTS="$(cat ${FILEROOT}/projects)"
 else
@@ -36,32 +43,32 @@ else
     exit 2
 fi
 
-if [ -z "${PROJECTS}" ]; then
-    echo "Error: '${FILEROOT}/projects' is empty"
-    exit 2
-fi
-
 usage()
 {
-    echo "USAGE: ${EXECNAME} <options>"
+    echo "USAGE: ${EXECNAME} [options]"
     echo
     echo "Set an alias to quickly change to project path, like so:"
     echo "    alias gotoproject='cd \`${EXECNAME} --get\`'"
     echo
     echo "Options:"
     echo "-h, --help    Show this help:"
-    echo "-s, --set     Set current project"
+    echo "-e, --edit    Edit project file with \$EDITOR"
     echo "-g, --get     Get current project path"
+    echo "-s, --set     Set current project"
 }
-
 
 choice()
 {
-    ${DIALOG} \
-        --backtitle "${VERSIONSTR}" \
-        --cancel-label "Exit" \
-        --menu "Project list" 0 0 0 $PROJECTS \
-        2> "${FILEROOT}/current"
+    if [ -n "${PROJECTS}" ]; then
+        ${DIALOG} \
+            --backtitle "${VERSIONSTR}" \
+            --cancel-label "Exit" \
+            --menu "Project list" 0 0 0 $PROJECTS \
+            2> "${FILEROOT}/current"
+    else
+        echo "File '${FILEROOT}/projects' is empty."
+        echo "You can edit it by using '${EXECNAME} --edit'"
+    fi
 }
 
 if [ ! "$1" ]; then
@@ -83,5 +90,12 @@ case "$1" in
             echo "${HOME}"
             exit 2
         fi
+        ;;
+    "-e" | "--edit")
+        if [ -z "${EDITOR}" ]; then
+            echo "Error: environment var '\$EDITOR' is not set"
+            exit 2
+        fi
+        ${EDITOR} "${FILEROOT}/projects"
         ;;
 esac
