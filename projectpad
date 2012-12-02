@@ -54,10 +54,6 @@ usage()
     echo "-g, --get     Get current project path"
 }
 
-if [ ! "$1" ]; then
-    usage
-    exit 1
-fi
 
 choice()
 {
@@ -67,6 +63,11 @@ choice()
         --menu "Project list" 0 0 0 $PROJECTS \
         2> "${FILEROOT}/current"
 }
+
+if [ ! "$1" ]; then
+    choice
+    exit
+fi
 
 case "$1" in
     "-h" | "--help")
