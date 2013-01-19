@@ -14,7 +14,7 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-VERSIONSTR="Projectpad v1.0"
+VERSIONSTR="Projectpad v1.1.0"
 EXECNAME=$(basename "$0")
 
 if [ -n "${XDG_CONFIG_HOME}" ]; then
@@ -81,6 +81,7 @@ choice()
             2> "${FILEROOT}/current"
     else
         editnotice
+        exit 1
     fi
 }
 

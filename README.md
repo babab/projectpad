@@ -7,10 +7,6 @@ Projectpad is a simple shell script for managing paths to (software) projects.
 - cdialog (installed on most \*nix systems as `dialog`)
   http://freecode.com/projects/cdialog
 
-## Downloading
-
-More info soon...
-
 ## Installing
 
 Make sure projectpad has execution rights.
