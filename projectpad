@@ -53,10 +53,22 @@ usage()
     echo "    alias setproject='projectpad set && cd \`projectpad get\`'"
     echo
     echo "Commands:"
+    echo
     echo "help    Show this help:"
     echo "edit    Edit project file with \$EDITOR"
     echo "get     Get current project path"
     echo "set     Set current project"
+}
+
+editnotice()
+{
+    echo "File '${FILEROOT}/projects' is empty."
+    echo "You can edit it by using '${EXECNAME} edit'"
+    echo
+    echo "It should contains entries like:"
+    echo ""
+    echo "${HOME}/path/to/projects/project_1    project_1"
+    echo "${HOME}/path/to/projects/project_2    project_2"
 }
 
 choice()
@@ -68,15 +80,9 @@ choice()
             --menu "Project list" 0 0 0 $PROJECTS \
             2> "${FILEROOT}/current"
     else
-        echo "File '${FILEROOT}/projects' is empty."
-        echo "You can edit it by using '${EXECNAME} edit'"
+        editnotice
     fi
 }
-
-if [ ! "$1" ]; then
-    usage
-    exit
-fi
 
 case "$1" in
     "help" | "-h" | "--help")
@@ -105,5 +111,15 @@ case "$1" in
             exit 2
         fi
         ${EDITOR} "${FILEROOT}/projects"
+        ;;
+    *)
+        usage
+        if [ ! -n "${PROJECTS}" ]; then
+            echo
+            echo "------------------------------------------------------------"
+            echo
+            editnotice
+        fi
+        exit
         ;;
 esac

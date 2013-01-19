@@ -28,7 +28,19 @@ location could be `/usr/local/bin/` if `$HOME/bin` is not in your `$PATH`.
 
 ## Using Projectpad
 
-More info soon...
+    USAGE: projectpad <command>
+
+    Set aliases to quickly change to project path, like so:
+
+        alias gotoproject='cd `projectpad get`'
+        alias setproject='projectpad set && cd `projectpad get`'
+
+    Commands:
+
+    help    Show this help:
+    edit    Edit project file with $EDITOR
+    get     Get current project path
+    set     Set current project
 
 ## License
 
