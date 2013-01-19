@@ -45,16 +45,18 @@ fi
 
 usage()
 {
-    echo "USAGE: ${EXECNAME} [options]"
+    echo "USAGE: ${EXECNAME} <command>"
     echo
-    echo "Set an alias to quickly change to project path, like so:"
-    echo "    alias gotoproject='cd \`${EXECNAME} --get\`'"
+    echo "Set aliases to quickly change to project path, like so:"
     echo
-    echo "Options:"
-    echo "-h, --help    Show this help:"
-    echo "-e, --edit    Edit project file with \$EDITOR"
-    echo "-g, --get     Get current project path"
-    echo "-s, --set     Set current project"
+    echo "    alias gotoproject='cd \`${EXECNAME} get\`'"
+    echo "    alias setproject='projectpad set && cd \`projectpad get\`'"
+    echo
+    echo "Commands:"
+    echo "help    Show this help:"
+    echo "edit    Edit project file with \$EDITOR"
+    echo "get     Get current project path"
+    echo "set     Set current project"
 }
 
 choice()
@@ -67,23 +69,23 @@ choice()
             2> "${FILEROOT}/current"
     else
         echo "File '${FILEROOT}/projects' is empty."
-        echo "You can edit it by using '${EXECNAME} --edit'"
+        echo "You can edit it by using '${EXECNAME} edit'"
     fi
 }
 
 if [ ! "$1" ]; then
-    choice
+    usage
     exit
 fi
 
 case "$1" in
-    "-h" | "--help")
+    "help" | "-h" | "--help")
         usage
         ;;
-    "-s" | "--set")
+    "set" | "-s" | "--set")
         choice
         ;;
-    "-g" | "--get")
+    "get" | "-g" | "--get")
         if [ -f "${FILEROOT}/current" ]; then
             PROJECT=$(cat "${FILEROOT}/current")
         else
@@ -97,7 +99,7 @@ case "$1" in
             exit 2
         fi
         ;;
-    "-e" | "--edit")
+    "edit" | "-e" | "--edit")
         if [ -z "${EDITOR}" ]; then
             echo "Error: environment var '\$EDITOR' is not set"
             exit 2
