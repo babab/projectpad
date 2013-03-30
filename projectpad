@@ -14,15 +14,18 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-VERSIONSTR="Projectpad v1.1.0"
+VERSIONSTR="Projectpad v1.2.0-dev"
 EXECNAME=$(basename "$0")
 
+# Use 'XDF_CONFIG_HOME' environment variable for the base path when found,
+# otherwise fall back to 'HOME'
 if [ -n "${XDG_CONFIG_HOME}" ]; then
     FILEROOT="${XDG_CONFIG_HOME}/projectpad"
 else
     FILEROOT="${HOME}/.projectpad"
 fi
 
+# Scan for presence of 'dialog'; exit when not found
 DIALOG=$(which dialog)
 if [ $? -gt 0 ]; then
     echo "Error: Could not find the 'dialog' program"
@@ -43,6 +46,13 @@ else
     exit 2
 fi
 
+# Check for correct usage of echo command for support on both *BSD and Linux
+ECHOCMD='echo -e'
+${ECHOCMD} > /dev/null 2>&1
+if [ $? -gt 0 ]; then
+    ECHOCMD='echo'
+fi
+
 usage()
 {
     echo "USAGE: ${EXECNAME} <command>"
@@ -58,6 +68,9 @@ usage()
     echo "edit    Edit project file with \$EDITOR"
     echo "get     Get current project path"
     echo "set     Set current project"
+    echo "update  Recursively scan PWD for git directories and append any "
+    echo "        found directories to the project file, immediately editing "
+    echo "        it afterwards"
 }
 
 editnotice()
@@ -85,6 +98,26 @@ choice()
     fi
 }
 
+edit_with_editor()
+{
+        if [ -z "${EDITOR}" ]; then
+            echo "Error: environment var '\$EDITOR' is not set"
+            exit 2
+        fi
+        ${EDITOR} "${FILEROOT}/projects"
+}
+
+update()
+{
+    dirs="$(find -type d -exec test -d "{}/.git" \; -prune -print)"
+    for dir in ${dirs}; do
+        new=$(echo "${dir}" | sed "s|^\.|${PWD}|")
+        file="${file}${new}\t\t"$(basename "${new}")"\n"
+    done
+    ${ECHOCMD} "${file}" >> "${FILEROOT}/projects"
+    edit_with_editor
+}
+
 case "$1" in
     "help" | "-h" | "--help")
         usage
@@ -107,11 +140,10 @@ case "$1" in
         fi
         ;;
     "edit" | "-e" | "--edit")
-        if [ -z "${EDITOR}" ]; then
-            echo "Error: environment var '\$EDITOR' is not set"
-            exit 2
-        fi
-        ${EDITOR} "${FILEROOT}/projects"
+        edit_with_editor
+        ;;
+    "update" | "-u" | "--update")
+        update
         ;;
     *)
         usage
