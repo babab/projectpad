@@ -67,9 +67,10 @@ usage()
     echo "help    Show this help:"
     echo "edit    Edit project file with \$EDITOR"
     echo "get     Get current project path"
+    echo "name    Get current project name"
     echo "set     Set current project"
-    echo "update  Recursively scan PWD for git directories and append any "
-    echo "        found directories to the project file, immediately editing "
+    echo "update  Recursively scan PWD for git directories and append any"
+    echo "        found directories to the project file, immediately editing"
     echo "        it afterwards"
 }
 
@@ -114,6 +115,7 @@ update()
         new=$(echo "${dir}" | sed "s|^\.|${PWD}|")
         file="${file}${new}\t\t"$(basename "${new}")"\n"
     done
+    ${ECHOCMD} "\n# Added by 'projectpad update' on $(date)" >> "${FILEROOT}/projects"
     ${ECHOCMD} "${file}" >> "${FILEROOT}/projects"
     edit_with_editor
 }
@@ -137,6 +139,14 @@ case "$1" in
         else
             echo "${HOME}"
             exit 2
+        fi
+        ;;
+    "name" | "-n" | "--name")
+        if [ -f "${FILEROOT}/current" ]; then
+            PROJECT=$(cat "${FILEROOT}/current")
+            echo $(basename "${PROJECT}")
+        else
+            echo none
         fi
         ;;
     "edit" | "-e" | "--edit")
