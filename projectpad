@@ -113,8 +113,7 @@ update()
         new=$(echo "${dir}" | sed "s|^\.|${PWD}|")
         file="${file}${new}\t\t"$(basename "${new}")"\n"
     done
-    ${ECHOCMD} "\n# Added by 'projectpad update' on $(date)" >> "${FILEROOT}/projects"
-    ${ECHOCMD} "${file}" >> "${FILEROOT}/projects"
+    ${ECHOCMD} "\n${file}" >> "${FILEROOT}/projects"
     edit_with_editor
 }
 
