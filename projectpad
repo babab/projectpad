@@ -126,6 +126,7 @@ case "$1" in
         ;;
     "set" | "-s" | "--set")
         choice
+        clear
         ;;
     "get" | "-g" | "--get")
         if [ -f "${FILEROOT}/current" ]; then
