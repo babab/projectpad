@@ -135,14 +135,14 @@ register_with_gitto()
 
 
 case "$1" in
-    "help" | "-h" | "--help")
+    "help")
         usage
         ;;
-    "set" | "-s" | "--set")
+    "set")
         choice
         clear
         ;;
-    "get" | "-g" | "--get")
+    "get")
         if [ -f "${FILEROOT}/current" ]; then
             PROJECT=$(cat "${FILEROOT}/current")
         else
@@ -156,7 +156,7 @@ case "$1" in
             exit 2
         fi
         ;;
-    "name" | "-n" | "--name")
+    "name")
         if [ -f "${FILEROOT}/current" ]; then
             PROJECT=$(cat "${FILEROOT}/current")
             echo $(basename "${PROJECT}")
@@ -164,10 +164,10 @@ case "$1" in
             echo none
         fi
         ;;
-    "edit" | "-e" | "--edit")
+    "edit")
         edit_with_editor
         ;;
-    "update" | "-u" | "--update")
+    "update")
         update
         ;;
     "gitto")
