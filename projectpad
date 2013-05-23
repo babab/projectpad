@@ -55,32 +55,29 @@ fi
 
 usage()
 {
-    echo "USAGE: ${EXECNAME} <command>"
-    echo
-    echo "Set aliases to quickly change to project path, like so:"
-    echo
-    echo "    alias gotoproject='cd \`${EXECNAME} get\`'"
-    echo "    alias setproject='projectpad set && cd \`projectpad get\`'"
+    echo "usage: ${EXECNAME} <command>"
     echo
     echo "Commands:"
-    echo
-    echo "help    Show this help:"
-    echo "edit    Edit project file with \$EDITOR"
-    echo "get     Get current project path"
-    echo "name    Get current project name"
-    echo "set     Set current project"
-    echo "update  Recursively scan PWD for git directories and append any"
-    echo "        found directories to the project file, immediately editing"
-    echo "        it afterwards"
+    echo "   help    Show this help:"
+    echo "   edit    Edit project file with \$EDITOR"
+    echo "   get     Get current project path"
+    echo "   name    Get current project name"
+    echo "   set     Set current project"
+    echo "   update  Recursively scan PWD for git directories and append any"
+    echo "           found directories to the project file, immediately"
+    echo "           editing it afterwards"
 }
 
 editnotice()
 {
     echo "File '${FILEROOT}/projects' is empty."
-    echo "You can edit it by using '${EXECNAME} edit'"
+    echo
+    echo "Run '${EXECNAME} update' to recursively add all git-versioned"
+    echo "directories found in the current working directory. You can edit"
+    echo "the projectfile (afterwards) by using '${EXECNAME} edit'"
     echo
     echo "It should contains entries like:"
-    echo ""
+    echo
     echo "${HOME}/path/to/projects/project_1    project_1"
     echo "${HOME}/path/to/projects/project_2    project_2"
 }
