@@ -66,6 +66,7 @@ usage()
     echo "   update  Recursively scan PWD for git directories and append any"
     echo "           found directories to the project file, immediately"
     echo "           editing it afterwards"
+    echo "   gitto   Register all projects with gitto"
 }
 
 editnotice()
@@ -117,6 +118,22 @@ update()
     edit_with_editor
 }
 
+register_with_gitto()
+{
+    # Scan for presence of 'gitto'; exit when not found
+    GITTO=$(which gitto)
+    if [ $? -gt 0 ]; then
+        echo "Error: Could not find the 'gitto' program"
+        exit 1
+    fi
+
+    project_paths=$(echo "${PROJECTS}" | awk '{ print $1 }')
+    for proj in $project_paths; do
+        $GITTO add $proj
+    done
+}
+
+
 case "$1" in
     "help" | "-h" | "--help")
         usage
@@ -152,6 +169,9 @@ case "$1" in
         ;;
     "update" | "-u" | "--update")
         update
+        ;;
+    "gitto")
+        register_with_gitto
         ;;
     *)
         usage
