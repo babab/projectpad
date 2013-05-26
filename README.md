@@ -1,42 +1,57 @@
 # Projectpad
 
-Projectpad is a simple shell script for managing paths to (software) projects.
+Projectpad is a shell utility for managing paths to project/git
+directories.
 
 ## Requirements
 
+- a \*nix bourne (compatible) shell (e.g. sh, ksh, zsh, bash)
 - cdialog (installed on most \*nix systems as `dialog`)
   http://freecode.com/projects/cdialog
 
 ## Installing
 
-Make sure projectpad has execution rights.
+Run 'make install' as root:
 
-    $ chmod +x projectpad
-
-Place it somewhere in your `PATH`.
-
-    $ cp projecpad ~/bin/
-
-I prefer to place 'foreign' shell scripts in my `$HOME/bin`, another good
-location could be `/usr/local/bin/` if `$HOME/bin` is not in your `$PATH`.
-
-    $ sudo cp projectpad /usr/local/bin/
+    # make install
 
 ## Using Projectpad
 
-    USAGE: projectpad <command>
+Usage:
 
-    Set aliases to quickly change to project path, like so:
-
-        alias gotoproject='cd `projectpad get`'
-        alias setproject='projectpad set && cd `projectpad get`'
+    usage: projectpad <command>
 
     Commands:
+       help    Show this help:
+       edit    Edit project file with $EDITOR
+       get     Get current project path
+       name    Get current project name
+       set     Set current project
+       update  Recursively scan PWD for git directories and append any
+               found directories to the project file, immediately
+               editing it afterwards
+       gitto   Register all projects with gitto
 
-    help    Show this help:
-    edit    Edit project file with $EDITOR
-    get     Get current project path
-    set     Set current project
+To quickly start using projectpad for your git repositories, cd to your
+parent folder (e.g. `~/git`) and create a project listing:
+
+    $ projectpad update
+
+Then set a project (using a dialog window):
+
+    $ projectpad set
+
+Now, whenever you want to change to the project you have 'set', you can
+run:
+
+    $ cd `projectpad get`
+
+To quickly change to the project directory (after setting it), it is
+advised to set the following aliases and use these instead of the get
+and set commands directly:
+
+    alias gotoproject='cd `projectpad get`'
+    alias setproject='projectpad set && cd `projectpad get`'
 
 ## License
 
