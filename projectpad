@@ -14,7 +14,7 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-VERSIONSTR="Projectpad v1.2.0-dev"
+VERSIONSTR="Projectpad v1.2.0"
 EXECNAME=$(basename "$0")
 
 # Use 'XDF_CONFIG_HOME' environment variable for the base path when found,
