@@ -128,7 +128,9 @@ register_with_gitto()
 
     project_paths=$(echo "${PROJECTS}" | awk '{ print $1 }')
     for proj in $project_paths; do
-        $GITTO add $proj
+        if [ "$(gitto check $proj)" == "Repository is not registered" ]; then
+            $GITTO add $proj
+        fi
     done
 }
 
