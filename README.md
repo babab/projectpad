@@ -1,7 +1,21 @@
 # Projectpad
 
-Projectpad is a shell utility for managing paths to project/git
-directories.
+Projectpad is a simple shell utility for managing git repositories
+and/or project directories.
+
+Here is a mini screencast where the following is done:
+
+ 1. A project list is automatically created by scanning for git
+    repositories in a folder `~/git`.
+ 2. Immediately after that, the project list is edited
+    (in your favorite editor).
+ 3. Setting the current project to 'gitto' and cd'ing to it using the
+    `gotoproject` alias.
+ 3. Setting the current project to 'smti' and cd'ing to it using the
+    `gotoproject` alias.
+
+![projectpad-mini-screencast](http://i.imgur.com/VbIWskG.gif)
+
 
 ## Requirements
 
