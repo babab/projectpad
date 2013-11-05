@@ -110,7 +110,7 @@ update()
 {
     dirs="$(find -type d -exec test -d "{}/.git" \; -prune -print)"
     for dir in ${dirs}; do
-        new=$(echo "${dir}" | sed "s|^\.|${PWD}|")
+        new=$(echo "${dir}" | sed -e "s|^\.|${PWD}|" -e "s|${HOME}|~|")
         file="${file}${new}\t\t"$(basename "${new}")"\n"
     done
     ${ECHOCMD} "\n${file}" >> "${FILEROOT}/projects"
@@ -145,7 +145,7 @@ case "$1" in
         ;;
     "get")
         if [ -f "${FILEROOT}/current" ]; then
-            PROJECT=$(cat "${FILEROOT}/current")
+            PROJECT=$(cat "${FILEROOT}/current" | sed "s|~|${HOME}|")
         else
             echo "${HOME}"
             exit 2
