@@ -67,6 +67,7 @@ usage()
     echo "           found directories to the project file, immediately"
     echo "           editing it afterwards"
     echo "   gitto   Register all projects with gitto"
+    echo "   pwd     Set current PWD as active project"
 }
 
 editnotice()
@@ -174,6 +175,9 @@ case "$1" in
         ;;
     "gitto")
         register_with_gitto
+        ;;
+    "pwd")
+        echo $PWD > ${FILEROOT}/current
         ;;
     *)
         usage

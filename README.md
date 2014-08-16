@@ -45,6 +45,9 @@ Usage:
                found directories to the project file, immediately
                editing it afterwards
        gitto   Register all projects with gitto
+       pwd     Set current PWD as active project
+
+
 
 To quickly start using projectpad for your git repositories, cd to your
 parent folder (e.g. `~/git`) and create a project listing:
@@ -61,11 +64,11 @@ run:
     $ cd `projectpad get`
 
 To quickly change to the project directory (after setting it), it is
-advised to set the following aliases and use these instead of the get
-and set commands directly:
+advised to set aliases and use these instead of the `get` and `set`
+commands directly:
 
-    alias gotoproject='cd `projectpad get`'
-    alias setproject='projectpad set && cd `projectpad get`'
+    alias g='cd `projectpad get`'
+    alias s='projectpad set && cd `projectpad get`'
 
 ## License
 
