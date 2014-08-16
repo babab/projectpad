@@ -24,6 +24,7 @@ _projectpad_commands=(
   'pwd:set current PWD as active project'
   'set:set current project'
   'update:recursively scan PWD for git directories'
+  'version:show version information'
 )
 
 _arguments '*:: :->subcmds' && return 0

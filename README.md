@@ -1,7 +1,7 @@
 # Projectpad
 
-Projectpad is a simple shell utility for managing git repositories
-and/or project directories.
+Projectpad is a shell utility for managing paths to project/git
+directories.
 
 Here is a mini screencast where the following is done:
 
@@ -46,6 +46,7 @@ Usage:
                editing it afterwards
        gitto   Register all projects with gitto
        pwd     Set current PWD as active project
+       version Show version information
 
 
 

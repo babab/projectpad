@@ -14,7 +14,7 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-VERSIONSTR="Projectpad v1.2.0"
+VERSIONSTR="Projectpad v1.3.0"
 EXECNAME=$(basename "$0")
 
 # Use 'XDF_CONFIG_HOME' environment variable for the base path when found,
@@ -68,6 +68,7 @@ usage()
     echo "           editing it afterwards"
     echo "   gitto   Register all projects with gitto"
     echo "   pwd     Set current PWD as active project"
+    echo "   version Show version information"
 }
 
 editnotice()
@@ -178,6 +179,9 @@ case "$1" in
         ;;
     "pwd")
         echo $PWD > ${FILEROOT}/current
+        ;;
+    "version")
+        echo "${VERSIONSTR} - https://github.com/babab/projectpad"
         ;;
     *)
         usage
