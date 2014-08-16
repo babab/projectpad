@@ -21,6 +21,7 @@ _projectpad_commands=(
   'gitto:register all projects with gitto'
   'help:show help'
   'name:get current project name'
+  'pwd:set current PWD as active project'
   'set:set current project'
   'update:recursively scan PWD for git directories'
 )
