@@ -116,7 +116,7 @@ update()
         new=$(echo "${dir}" | sed -e "s|^\.|${PWD}|" -e "s|${HOME}|~|")
         file="${file}${new}\t\t"$(basename "${new}")"\n"
     done
-    ${ECHOCMD} "\n${file}" >> "${FILEROOT}/projects"
+    ${ECHOCMD} "\n${file}" | sort -k 2 >> "${FILEROOT}/projects"
     edit_with_editor
 }
 
