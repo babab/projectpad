@@ -153,6 +153,23 @@ _prune_path()
     PROJECTS="$(cat ${FILEROOT}/projects)"
 }
 
+_get_name()
+{
+    if [ -f "${FILEROOT}/current" ]; then
+        PROJECT=$(cat "${FILEROOT}/current")
+        echo $(basename "${PROJECT}")
+    else
+        echo none
+    fi
+}
+
+_symlink()
+{
+    if [[ ! -z "${PROJECTPAD_SYMLINK}" && $(_get_name != "none") ]]; then
+        ln -sf $(cat "${FILEROOT}/current") "${PROJECTPAD_SYMLINK}"
+    fi
+}
+
 
 case "$1" in
     "help")
@@ -160,6 +177,7 @@ case "$1" in
         ;;
     "set")
         choice
+        _symlink
         clear
         ;;
     "get")
@@ -177,12 +195,7 @@ case "$1" in
         fi
         ;;
     "name")
-        if [ -f "${FILEROOT}/current" ]; then
-            PROJECT=$(cat "${FILEROOT}/current")
-            echo $(basename "${PROJECT}")
-        else
-            echo none
-        fi
+        _get_name
         ;;
     "edit")
         edit_with_editor
@@ -193,12 +206,14 @@ case "$1" in
     "add")
         _prune_path "$PWD"
         add_pwd
+        _symlink
         ;;
     "gitto")
         register_with_gitto
         ;;
     "pwd")
         echo $PWD > ${FILEROOT}/current
+        _symlink
         ;;
     "version")
         echo "${VERSIONSTR} - https://github.com/babab/projectpad"
