@@ -25,51 +25,68 @@ Here is a mini screencast where the following is done:
 
 ## Installing
 
-Run 'make install' as root:
+Run '`make install`' as root:
 
-    # make install
+    $ sudo make install
 
-## Using Projectpad
+## Using projectpad
 
-Usage:
+In your console/shell, change the directory to a 'project' path.
+Then add the current directory/project by running:
+
+    $ projectpad add
+
+Then set a project (using a dialog window):
+
+    $ projectpad set  # or alias 's', see Shell settings
+
+Now, whenever you want to change to the project you have 'set', you can
+run:
+
+    $ cd `projectpad get`  # or alias 'g', see Shell settings
+
+### Shell settings
+
+To quickly change to the project directory (after setting it), it is
+advised to set aliases and use them instead of the `get` and `set`
+commands directly:
+
+    alias g='cd `projectpad get`'
+    alias s='projectpad set && cd `projectpad get`'
+
+### Auto scan git repositories and them as projects
+
+To use projectpad with your git repositories, cd to your
+parent folder (e.g. `~/projects`) and create a project listing:
+
+    $ projectpad update
+
+This will recursively scan the directory for git repositories.
+Of course, you can also add any single git repository this way.
+
+### Temporary paths
+
+Use `projectpad pwd` if you want to set $PWD as active path, but don't
+want to add it.
+
+
+## Command overview
 
     usage: projectpad <command>
 
     Commands:
        help    Show this help:
-       edit    Edit project file with $EDITOR
-       get     Get current project path
-       name    Get current project name
        set     Set current project
-       update  Recursively scan PWD for git directories and append any
+       add     Add $PWD to projects and activate path
+       pwd     Set $PWD as active path
+       edit    Edit project file with $EDITOR
+       update  Recursively scan $PWD for git directories and append any
                found directories to the project file, immediately
                editing it afterwards
        gitto   Register all projects with gitto
-       pwd     Set current PWD as active project
+       name    Get current project name
+       get     Get current project path
        version Show version information
-
-
-
-To quickly start using projectpad for your git repositories, cd to your
-parent folder (e.g. `~/git`) and create a project listing:
-
-    $ projectpad update
-
-Then set a project (using a dialog window):
-
-    $ projectpad set
-
-Now, whenever you want to change to the project you have 'set', you can
-run:
-
-    $ cd `projectpad get`
-
-To quickly change to the project directory (after setting it), it is
-advised to set aliases and use these instead of the `get` and `set`
-commands directly:
-
-    alias g='cd `projectpad get`'
-    alias s='projectpad set && cd `projectpad get`'
 
 ## License
 
