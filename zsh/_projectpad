@@ -16,14 +16,15 @@
 
 local -a _projectpad_commands
 _projectpad_commands=(
-  "edit:edit project file with $EDITOR"
+  'add:add $PWD to projects and activate path'
+  'edit:edit project file with $EDITOR'
   'get:get current project path'
   'gitto:register all projects with gitto'
   'help:show help'
   'name:get current project name'
-  'pwd:set current PWD as active project'
+  'pwd:set $PWD as active path'
   'set:set current project'
-  'update:recursively scan PWD for git directories'
+  'update:recursively scan $PWD for git directories'
   'version:show version information'
 )
 
