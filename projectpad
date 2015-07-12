@@ -166,7 +166,8 @@ _get_name()
 _symlink()
 {
     if [[ ! -z "${PROJECTPAD_SYMLINK}" && $(_get_name != "none") ]]; then
-        ln -sf $(cat "${FILEROOT}/current") "${PROJECTPAD_SYMLINK}"
+        ln -sfnr $(cat "${FILEROOT}/current" | sed "s|~|${HOME}|") \
+            "${PROJECTPAD_SYMLINK}"
     fi
 }
 
