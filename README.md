@@ -17,9 +17,14 @@ can be used to feed [Gitto](https://github.com/ryuslash/gitto).
 
 ## Installing
 
-Run '`make install`' as root:
+From the source directory, run '`make install`' as root:
 
     $ sudo make install
+
+This will install projectpad to /usr/local/bin by default and will also
+install the completion file for zsh. If at anytime you want to get rid
+of pycommand, you can just run `sudo make uninstall` from the source
+directory.
 
 ## Using projectpad
 
