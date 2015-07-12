@@ -1,20 +1,10 @@
 # Projectpad
 
-Projectpad is a shell utility for managing paths to project/git
-directories.
-
-Here is a mini screencast where the following is done:
-
- 1. A project list is automatically created by scanning for git
-    repositories in a folder `~/git`.
- 2. Immediately after that, the project list is edited
-    (in your favorite editor).
- 3. Setting the current project to 'gitto' and cd'ing to it using the
-    `gotoproject` alias.
- 3. Setting the current project to 'smti' and cd'ing to it using the
-    `gotoproject` alias.
-
-![projectpad-mini-screencast](http://i.imgur.com/VbIWskG.gif)
+Projectpad is a utility for very quick navigation to
+working directories in your command line shell. It
+`/can/also/alleviate/very/long/path/names` to simple `~/symlink`s.
+Projectpad is friendly to git repositories, has completion for zsh and
+can be used to feed [Gitto](https://github.com/ryuslash/gitto).
 
 
 ## Requirements
@@ -81,8 +71,7 @@ want to add it.
        pwd     Set $PWD as active path
        edit    Edit project file with $EDITOR
        update  Recursively scan $PWD for git directories and append any
-               found directories to the project file, immediately
-               editing it afterwards
+               found directories to the project file
        gitto   Register all projects with gitto
        name    Get current project name
        get     Get current project path
