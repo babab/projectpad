@@ -35,7 +35,7 @@ run:
 
     $ cd `projectpad get`  # or alias 'g', see Shell settings
 
-### Shell settings
+### Basic shell settings
 
 To quickly change to the project directory (after setting it), it is
 advised to set aliases and use them instead of the `get` and `set`
@@ -53,6 +53,25 @@ parent folder (e.g. `~/projects`) and create a project listing:
 
 This will recursively scan the directory for git repositories.
 Of course, you can also add any single git repository this way.
+
+### Keep a symlink in sync with the active project
+
+Projectpad can keep a symbolic link that always points to the active directory,
+which can help to greatly shorten long path names in your prompt.
+
+If a variable `${PROJECTPAD_SYMLINK}` is set in the shell, and only then,
+projectpad will update the symlink whenever you change projects.
+
+    export PROJECTPAD_SYMLINK=~/p
+    alias gg="cd ${PROJECTPAD_SYMLINK}"  # optional
+
+Tip! If you add `$(projectpad name)` to your `PS1` prompt, you can
+shorten paths names but still be informed about the project that you are
+working on.
+
+Tip! Use in combination with
+[$CDPATH](http://linux.101hacks.com/cd-command/cdpath/)
+for even more lazyness and comfort
 
 ### Temporary paths
 
