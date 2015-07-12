@@ -64,8 +64,7 @@ usage()
     echo '   pwd     Set $PWD as active path'
     echo '   edit    Edit project file with $EDITOR'
     echo '   update  Recursively scan $PWD for git directories and append any'
-    echo "           found directories to the project file, immediately"
-    echo "           editing it afterwards"
+    echo "           found directories to the project file"
     echo "   gitto   Register all projects with gitto"
     echo "   name    Get current project name"
     echo "   get     Get current project path"
@@ -117,7 +116,6 @@ update()
         file="${file}${new}\t\t"$(basename "${new}")"\n"
     done
     ${ECHOCMD} "\n${file}" | sort -k 2 >> "${FILEROOT}/projects"
-    edit_with_editor
 }
 
 add_pwd()
