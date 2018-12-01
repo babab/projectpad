@@ -6,7 +6,7 @@ working directories in your command line shell. It
 Projectpad is friendly to git repositories, has completion for zsh and
 can be used to feed [Gitto](https://github.com/ryuslash/gitto).
 
-![demo](http://i.imgur.com/pCIwnNT.gif)
+![demo](https://i.imgur.com/pCIwnNT.gif)
 
 
 ## Requirements
