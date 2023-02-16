@@ -26,7 +26,7 @@ else
 fi
 
 # Scan for presence of 'dialog'; exit when not found
-DIALOG=$(which dialog)
+DIALOG=$(command -v dialog)
 if [ $? -gt 0 ]; then
     echo "Error: Could not find the 'dialog' program"
     exit 1
@@ -129,7 +129,7 @@ add_pwd()
 register_with_gitto()
 {
     # Scan for presence of 'gitto'; exit when not found
-    GITTO=$(which gitto)
+    GITTO=$(command -v gitto)
     if [ $? -gt 0 ]; then
         echo "Error: Could not find the 'gitto' program"
         exit 1
