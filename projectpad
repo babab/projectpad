@@ -33,6 +33,9 @@
 VERSIONSTR="Projectpad v1.4.0"
 EXECNAME=$(basename "$0")
 
+# There is no need to share the config and data files of projectpad
+umask 077
+
 # Use 'XDF_CONFIG_HOME' environment variable for the base path when found,
 # otherwise fall back to 'HOME'
 if [ -n "${XDG_CONFIG_HOME}" ]; then
