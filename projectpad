@@ -182,10 +182,16 @@ _get_name()
 
 _symlink()
 {
+    # must return a status code
     if [[ ! -z "${PROJECTPAD_SYMLINK}" && $(_get_name != "none") ]]; then
         ln -sfnr $(cat "${FILEROOT}/current" | sed "s|~|${HOME}|") \
             "${PROJECTPAD_SYMLINK}"
+        if [ $? -ne 0 ]; then
+            echo projecpad error: could not create symlink
+            return 1
+        fi
     fi
+    return 0
 }
 
 
@@ -195,8 +201,7 @@ case "$1" in
         ;;
     "set")
         choice
-        _symlink
-        clear
+        _symlink && clear
         ;;
     "get")
         if [ -f "${FILEROOT}/current" ]; then
