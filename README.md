@@ -1,10 +1,19 @@
 # Projectpad
 
-Projectpad is a utility for very quick navigation to
-working directories in your command line shell. It
-`/can/also/alleviate/very/long/path/names` to simple `~/symlink`s.
-Projectpad is friendly to git repositories, has completion for zsh and
-can be used to feed [Gitto](https://github.com/ryuslash/gitto).
+Manage favorite paths and quickly `cd` to them in your shell.
+
+Projectpad keeps a list of your favorite (project) directories and
+allows for very quick navigation to those directories in the command
+line shell.
+
+Optionally a symlink `~/p` can be used that will point to
+the selected path, which can be practical when dealing with
+`/very/long/and/deeply/burried/folders/`. The link is updated whenever
+you switch projects.
+
+Projectpad and Git combine very-well, you can recursively scan for
+git repositories to quickly add them to the selection list. Command
+completion support for Zsh is included.
 
 ![demo](https://i.imgur.com/pCIwnNT.gif)
 
@@ -17,7 +26,7 @@ can be used to feed [Gitto](https://github.com/ryuslash/gitto).
 
 ## Installing
 
-From the source directory, run '`make install`' as root:
+From the source directory, run `make install` with root privileges:
 
     $ sudo make install
 
@@ -27,6 +36,12 @@ of pycommand, you can just run `sudo make uninstall` from the source
 directory.
 
 ## Using projectpad
+
+You'll never have to cd /home/user/projects/work/projectX again. Well,
+ok once maybe, to add the directory to your list. In short, daily usage
+will look like this:
+- `g` cd to the project/directory you were working on
+- `s` pick a directory from your list and immediately cd to it
 
 In your console/shell, change the directory to a 'project' path.
 Then add the current directory/project by running:
@@ -42,6 +57,7 @@ run:
 
     $ cd `projectpad get`  # or alias 'g', see Shell settings
 
+
 ### Basic shell settings
 
 To quickly change to the project directory (after setting it), it is
@@ -50,6 +66,7 @@ commands directly:
 
     alias g='cd `projectpad get`'
     alias s='projectpad set && cd `projectpad get`'
+
 
 ### Auto scan git repositories and them as projects
 
@@ -60,6 +77,7 @@ parent folder (e.g. `~/projects`) and create a project listing:
 
 This will recursively scan the directory for git repositories.
 Of course, you can also add any single git repository this way.
+
 
 ### Keep a symlink in sync with the active project
 
@@ -80,10 +98,11 @@ Tip! Use in combination with
 [$CDPATH](http://linux.101hacks.com/cd-command/cdpath/)
 for even more lazyness and comfort
 
+
 ### Temporary paths
 
 Use `projectpad pwd` if you want to set $PWD as active path, but don't
-want to add it.
+want to add it to the list for later selection.
 
 
 ## Command overview
@@ -102,6 +121,10 @@ want to add it.
        name    Get current project name
        get     Get current project path
        version Show version information
+
+If you use a symlink that points to projectpad, the name of that symlink
+is used instead of projectpad when printing usage/help information.
+
 
 ## License
 
