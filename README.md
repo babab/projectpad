@@ -15,7 +15,7 @@ Projectpad and Git combine very-well, you can recursively scan for
 git repositories to quickly add them to the selection list. Command
 completion support for Zsh is included.
 
-![demo](https://i.imgur.com/pCIwnNT.gif)
+![demo gif](misc/demo.gif)
 
 
 ## Requirements
