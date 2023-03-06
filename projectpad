@@ -97,13 +97,18 @@ editnotice() {
     echo "${HOME}/path/to/projects/project_2    project_2"
 }
 
+_dialog() {
+    ${DIALOG} \
+        --backtitle "${VERSIONSTR}" \
+        --cancel-label "Exit" \
+        --menu "Project list" 0 0 0 "$@" \
+        2> "${FILEROOT}/current"
+}
+
 choice() {
     if [ -n "${PROJECTS}" ]; then
-        ${DIALOG} \
-            --backtitle "${VERSIONSTR}" \
-            --cancel-label "Exit" \
-            --menu "Project list" 0 0 0 "$PROJECTS" \
-            2> "${FILEROOT}/current"
+        # shellcheck disable=SC2086
+        _dialog ${PROJECTS}
     else
         editnotice
         exit 1
