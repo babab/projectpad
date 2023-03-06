@@ -32,6 +32,8 @@
 
 VERSIONSTR="Projectpad v1.4.0"
 EXECNAME=$(basename "$0")
+test -n "$PROJECTPAD_SYMLINK" || PROJECTPAD_SYMLINK=''
+
 
 # There is no need to share the config and data files of projectpad
 umask 077
@@ -45,8 +47,7 @@ else
 fi
 
 # Scan for presence of 'dialog'; exit when not found
-DIALOG=$(command -v dialog)
-if [ $? -gt 0 ]; then
+if ! DIALOG=$(command -v dialog); then
     echo "Error: Could not find the 'dialog' program"
     exit 1
 fi
@@ -59,30 +60,23 @@ if [ ! -f "${FILEROOT}/projects" ]; then
 fi
 
 if [ -f "${FILEROOT}/projects" ]; then
-    PROJECTS="$(cat ${FILEROOT}/projects)"
+    PROJECTS="$(cat "${FILEROOT}/projects")"
 else
-    echo "Error: could not find file '${FILEROOT}/projects'"
+    echo "Error: could not find or create file '${FILEROOT}/projects'"
     exit 2
 fi
 
-# Check for correct usage of echo command for support on both *BSD and Linux
-ECHOCMD='echo -e'
-${ECHOCMD} > /dev/null 2>&1
-if [ $? -gt 0 ]; then
-    ECHOCMD='echo'
-fi
 
-usage()
-{
+usage() {
     echo "usage: ${EXECNAME} <command>"
     echo
     echo "Commands:"
     echo "   help    Show this help:"
     echo "   set     Set current project"
-    echo '   add     Add $PWD to projects and activate path'
-    echo '   pwd     Set $PWD as active path'
-    echo '   edit    Edit project file with $EDITOR'
-    echo '   update  Recursively scan $PWD for git directories and append any'
+    echo '   add     Add PWD to projects and activate path'
+    echo '   pwd     Set PWD as active path'
+    echo '   edit    Edit project file with EDITOR'
+    echo '   update  Recursively scan PWD for git directories and append any'
     echo "           found directories to the project file"
     echo "   gitto   Register all projects with gitto"
     echo "   name    Get current project name"
@@ -90,8 +84,7 @@ usage()
     echo "   version Show version information"
 }
 
-editnotice()
-{
+editnotice() {
     echo "File '${FILEROOT}/projects' is empty."
     echo
     echo "Run '${EXECNAME} update' to recursively and all git-versioned"
@@ -104,13 +97,12 @@ editnotice()
     echo "${HOME}/path/to/projects/project_2    project_2"
 }
 
-choice()
-{
+choice() {
     if [ -n "${PROJECTS}" ]; then
         ${DIALOG} \
             --backtitle "${VERSIONSTR}" \
             --cancel-label "Exit" \
-            --menu "Project list" 0 0 0 $PROJECTS \
+            --menu "Project list" 0 0 0 "$PROJECTS" \
             2> "${FILEROOT}/current"
     else
         editnotice
@@ -118,8 +110,7 @@ choice()
     fi
 }
 
-edit_with_editor()
-{
+edit_with_editor() {
         if [ -z "${EDITOR}" ]; then
             echo "Error: environment var '\$EDITOR' is not set"
             exit 2
@@ -127,66 +118,59 @@ edit_with_editor()
         ${EDITOR} "${FILEROOT}/projects"
 }
 
-update()
-{
-    dirs="$(find -type d -exec test -d "{}/.git" \; -prune -print)"
+update() {
+    dirs="$(find . -type d -exec test -d "{}/.git" \; -prune -print)"
     for dir in ${dirs}; do
         new=$(echo "${dir}" | sed -e "s|^\.|${PWD}|" -e "s|${HOME}|~|")
-        file="${file}${new}   "$(basename "${new}")"\n"
+        file="${file}${new}   $(basename "${new}")\n"
     done
-    ${ECHOCMD} "\n${file}" | sort -k 2 >> "${FILEROOT}/projects"
+    printf '\n%s' "${file}" | sort -k 2 >> "${FILEROOT}/projects"
 }
 
-add_pwd()
-{
-    echo $PWD > ${FILEROOT}/current
-    echo -n "$PWD   " | sed "s|${HOME}|~|" > ${FILEROOT}/projects
-    echo $(basename "$PWD") >> ${FILEROOT}/projects
-    echo "${PROJECTS}" >> ${FILEROOT}/projects
+add_pwd() {
+    echo "$PWD" > "${FILEROOT}/current"
+    printf '%s   \n' "$PWD" | sed "s|${HOME}|~|" > "${FILEROOT}/projects"
+    basename "$PWD" >> "${FILEROOT}/projects"
+    echo "${PROJECTS}" >> "${FILEROOT}/projects"
 }
 
-register_with_gitto()
-{
+register_with_gitto() {
     # Scan for presence of 'gitto'; exit when not found
-    GITTO=$(command -v gitto)
-    if [ $? -gt 0 ]; then
+    if ! GITTO=$(command -v gitto); then
         echo "Error: Could not find the 'gitto' program"
         exit 1
     fi
 
-    project_paths=$(echo "${PROJECTS}" | awk '{ print $1 }' | sed "s|~|${HOME}|")
-    for proj in ${project_paths}; do
-        if [ "$(${GITTO} check ${proj})" == "Repository is not registered" ]
+    _ppaths=$(echo "${PROJECTS}" | awk '{ print $1 }' | sed "s|~|${HOME}|")
+    for proj in ${_ppaths}; do
+        if [ "$("${GITTO}" check "${proj}")" = "Repository is not registered" ]
         then
-            ${GITTO} add ${proj}
+            "${GITTO}" add "${proj}"
         fi
     done
 }
 
-_prune_path()
-{
+_prune_path() {
     strippath=$(echo "$1 " | sed "s|${HOME}|~|")
-    echo "${PROJECTS}" | grep -v "${strippath}" > ${FILEROOT}/projects
-    PROJECTS="$(cat ${FILEROOT}/projects)"
+    echo "${PROJECTS}" | grep -v "${strippath}" > "${FILEROOT}/projects"
+    PROJECTS="$(cat "${FILEROOT}/projects")"
 }
 
-_get_name()
-{
+_get_name() {
     if [ -f "${FILEROOT}/current" ]; then
         PROJECT=$(cat "${FILEROOT}/current")
-        echo $(basename "${PROJECT}")
+        basename "${PROJECT}"
     else
         echo none
     fi
 }
 
-_symlink()
-{
+_symlink() {
     # must return a status code
-    if [[ ! -z "${PROJECTPAD_SYMLINK}" && $(_get_name != "none") ]]; then
-        ln -sfnr $(cat "${FILEROOT}/current" | sed "s|~|${HOME}|") \
+    if test -n "${PROJECTPAD_SYMLINK}" && test "$(_get_name)" != 'none'; then
+        if ! ln -sfnr "$(sed "s|~|${HOME}|" "${FILEROOT}/current")" \
             "${PROJECTPAD_SYMLINK}"
-        if [ $? -ne 0 ]; then
+        then
             echo projecpad error: could not create symlink
             return 1
         fi
@@ -205,7 +189,7 @@ case "$1" in
         ;;
     "get")
         if [ -f "${FILEROOT}/current" ]; then
-            PROJECT=$(cat "${FILEROOT}/current" | sed "s|~|${HOME}|")
+            PROJECT="$(sed "s|~|${HOME}|" "${FILEROOT}/current")"
         else
             echo "${HOME}"
             exit 2
@@ -235,7 +219,7 @@ case "$1" in
         register_with_gitto
         ;;
     "pwd")
-        echo $PWD > ${FILEROOT}/current
+        echo "$PWD" > "${FILEROOT}/current"
         _symlink
         ;;
     "version")
@@ -243,7 +227,7 @@ case "$1" in
         ;;
     *)
         usage
-        if [ ! -n "${PROJECTS}" ]; then
+        if [ -z "${PROJECTS}" ]; then
             echo
             echo "------------------------------------------------------------"
             echo
