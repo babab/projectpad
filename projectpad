@@ -129,7 +129,7 @@ update() {
 
 add_pwd() {
     echo "$PWD" > "${FILEROOT}/current"
-    printf '%s   \n' "$PWD" | sed "s|${HOME}|~|" > "${FILEROOT}/projects"
+    printf '%s   ' "$PWD" | sed "s|${HOME}|~|" > "${FILEROOT}/projects"
     basename "$PWD" >> "${FILEROOT}/projects"
     echo "${PROJECTS}" >> "${FILEROOT}/projects"
 }
