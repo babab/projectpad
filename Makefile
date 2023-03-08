@@ -12,11 +12,11 @@ make:
 
 install:
 	install -Dm 755 projectpad ${BIN_PATH}
-	install -Dm 644 zsh/_projectpad $(ZSH_SITE_FUNCS_PATH)
+	install -Dm 644 completion/zsh/_projectpad $(ZSH_SITE_FUNCS_PATH)
 uninstall:
 	rm -f $(BASE_PATH)/local/bin/projectpad
 	rm -f $(ZSH_SITE_FUNCS_PATH)/_projectpad
 
 check:
 	shellcheck projectpad
-	zsh --no-exec zsh/_projectpad
+	zsh --no-exec completion/zsh/_projectpad
