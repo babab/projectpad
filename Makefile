@@ -7,6 +7,12 @@ export SHELLCHECK_OPTS = --check-sourced --enable \
 	avoid-nullary-conditions,check-unassigned-uppercase,deprecate-which
 
 make:
+	@echo '### VARS ###'
+	@echo BASE_PATH=${BASE_PATH}
+	@echo BIN_PATH=${BIN_PATH}
+	@echo BASH_COMPLETIONSDIR=${BASH_COMPLETIONSDIR}
+	@echo ZSH_SITE_FUNCS_PATH=${ZSH_SITE_FUNCS_PATH}
+	@printf '\n### TARGETS ###\n'
 	@echo 'make install   -- install projectpad'
 	@echo 'make uninstall -- uninstall projectpad'
 	@echo 'make check     -- check scripts for correct (POSIX) syntax'
