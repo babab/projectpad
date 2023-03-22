@@ -1,0 +1,19 @@
+# input file of projectpad for completely
+#
+# $ alias completely='docker run --rm -it --user $(id -u):$(id -g) \
+#           --volume "$PWD:/app" dannyben/completely'
+#
+# $ cd completion/bash
+# $ completely generate projectpad.yaml projectpad
+
+projectpad:
+- help
+- set
+- add
+- pwd
+- edit
+- update
+- gitto
+- name
+- get
+- version

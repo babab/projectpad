@@ -13,7 +13,7 @@ you switch projects.
 
 Projectpad and Git combine very-well, you can recursively scan for
 git repositories to quickly add them to the selection list. Command
-completion support for Zsh is included.
+completion support for Bash and Zsh is included.
 
 ![demo gif](misc/demo.gif)
 
@@ -31,9 +31,9 @@ From the source directory, run `make install` with root privileges:
     $ sudo make install
 
 This will install projectpad to /usr/local/bin by default and will also
-install the completion file for zsh. If at anytime you want to get rid
-of pycommand, you can just run `sudo make uninstall` from the source
-directory.
+install the completion file for bash and zsh. If at anytime you want to
+get rid of pycommand, you can just run `sudo make uninstall` from the
+source directory.
 
 ## Using projectpad
 

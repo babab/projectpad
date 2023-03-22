@@ -1,5 +1,6 @@
 BASE_PATH		= /usr
 BIN_PATH		= ${BASE_PATH}/local/bin
+BASH_COMPLETIONSDIR	= $$(pkg-config --variable=completionsdir bash-completion)
 ZSH_SITE_FUNCS_PATH	= ${BASE_PATH}/share/zsh/site-functions
 
 export SHELLCHECK_OPTS = --check-sourced --enable \
@@ -13,9 +14,12 @@ make:
 install:
 	install -Dm 755 projectpad ${BIN_PATH}
 	install -Dm 644 completion/zsh/_projectpad $(ZSH_SITE_FUNCS_PATH)
+	test -n "${BASH_COMPLETIONSDIR}" || (printf "\nerror: BASH_COMPLETIONSDIR not found\n" && false)
+	install -Dm 644 completion/bash/projectpad $(BASH_COMPLETIONSDIR)
 uninstall:
 	rm -f $(BASE_PATH)/local/bin/projectpad
 	rm -f $(ZSH_SITE_FUNCS_PATH)/_projectpad
+	test -n "${BASH_COMPLETIONSDIR}" && rm -f "${BASH_COMPLETIONSDIR}/projectpad"
 
 check:
 	shellcheck projectpad
