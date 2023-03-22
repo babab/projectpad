@@ -28,5 +28,11 @@ uninstall:
 	test -n "${BASH_COMPLETIONSDIR}" && rm -f "${BASH_COMPLETIONSDIR}/projectpad"
 
 check:
-	shellcheck projectpad
+	# check projectpad with all possible shell specifications
+	shellcheck --shell=sh projectpad
+	shellcheck --shell=dash projectpad
+	shellcheck --shell=bash projectpad
+	shellcheck --shell=ksh projectpad
+	# check bash and zsh completion scripts
+	shellcheck --shell=bash completion/bash/projectpad
 	zsh --no-exec completion/zsh/_projectpad
