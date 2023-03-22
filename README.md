@@ -28,7 +28,9 @@ completion support for Bash and Zsh is included.
 
 From the source directory, run `make install` with root privileges:
 
-    $ sudo make install
+``` shell
+$ sudo make install
+```
 
 This will install projectpad to /usr/local/bin by default and will also
 install the completion file for bash and zsh. If at anytime you want to
@@ -46,16 +48,22 @@ will look like this:
 In your console/shell, change the directory to a 'project' path.
 Then add the current directory/project by running:
 
-    $ projectpad add
+``` shell
+$ projectpad add
+```
 
 Then set a project (using a dialog window):
 
-    $ projectpad set  # or alias 's', see Shell settings
+``` shell
+$ projectpad set  # or alias 's', see Shell settings
+```
 
 Now, whenever you want to change to the project you have 'set', you can
 run:
 
-    $ cd `projectpad get`  # or alias 'g', see Shell settings
+``` shell
+$ cd `projectpad get`  # or alias 'g', see Shell settings
+```
 
 
 ### Basic shell settings
@@ -64,8 +72,10 @@ To quickly change to the project directory (after setting it), it is
 advised to set aliases and use them instead of the `get` and `set`
 commands directly:
 
-    alias g='cd `projectpad get`'
-    alias s='projectpad set && cd `projectpad get`'
+``` shell
+alias g='cd `projectpad get`'
+alias s='projectpad set && cd `projectpad get`'
+```
 
 
 ### Auto scan git repositories and them as projects
@@ -73,7 +83,9 @@ commands directly:
 To use projectpad with your git repositories, cd to your
 parent folder (e.g. `~/projects`) and create a project listing:
 
-    $ projectpad update
+``` shell
+$ projectpad update
+```
 
 This will recursively scan the directory for git repositories.
 Of course, you can also add any single git repository this way.
@@ -87,8 +99,10 @@ which can help to greatly shorten long path names in your prompt.
 If a variable `${PROJECTPAD_SYMLINK}` is set in the shell, and only then,
 projectpad will update the symlink whenever you change projects.
 
-    export PROJECTPAD_SYMLINK=~/p
-    alias gg="cd ${PROJECTPAD_SYMLINK}"  # optional
+``` shell
+export PROJECTPAD_SYMLINK=~/p
+alias gg="cd ${PROJECTPAD_SYMLINK}"  # optional
+```
 
 Tip! If you add `$(projectpad name)` to your `PS1` prompt, you can
 shorten paths names but still be informed about the project that you are
@@ -107,23 +121,26 @@ want to add it to the list for later selection.
 
 ## Command overview
 
-    usage: projectpad <command>
+``` shell
+$ projectpad help
+usage: projectpad <command>
 
-    Commands:
-       help    Show this help:
-       set     Set current project
-       add     Add $PWD to projects and activate path
-       pwd     Set $PWD as active path
-       edit    Edit project file with $EDITOR
-       update  Recursively scan $PWD for git directories and append any
-               found directories to the project file
-       gitto   Register all projects with gitto
-       name    Get current project name
-       get     Get current project path
-       version Show version information
+Commands:
+   help    Show this help:
+   set     Set current project
+   add     Add PWD to projects and activate path
+   pwd     Set PWD as active path
+   edit    Edit project file with EDITOR
+   update  Recursively scan PWD for git directories and append any
+           found directories to the project file
+   gitto   Register all projects with gitto
+   name    Get current project name
+   get     Get current project path
+   version Show version information
 
 If you use a symlink that points to projectpad, the name of that symlink
 is used instead of projectpad when printing usage/help information.
+```
 
 
 ## License
