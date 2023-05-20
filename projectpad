@@ -30,7 +30,7 @@
 
 # SPDX-License-Identifier: BSD-3-Clause
 
-VERSIONSTR="Projectpad v1.4.0"
+VERSIONSTR="Projectpad v1.4.1"
 EXECNAME=$(basename "$0")
 test -n "$PROJECTPAD_SYMLINK" || PROJECTPAD_SYMLINK=''
 
@@ -127,9 +127,11 @@ update() {
     dirs="$(find . -type d -exec test -d "{}/.git" \; -prune -print)"
     for dir in ${dirs}; do
         new=$(echo "${dir}" | sed -e "s|^\.|${PWD}|" -e "s|${HOME}|~|")
-        file="${file}${new}   $(basename "${new}")\n"
+        list="${list}${new}   $(basename "${new}")
+"
+#^ var list needs to end with a newline each iteration
     done
-    printf '\n%s' "${file}" | sort -k 2 >> "${FILEROOT}/projects"
+    printf '\n%s' "${list}" | sort -k 2 >> "${FILEROOT}/projects"
 }
 
 add_pwd() {
